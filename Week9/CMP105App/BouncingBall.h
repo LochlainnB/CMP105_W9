@@ -1,0 +1,23 @@
+#pragma once
+#include "Framework/Collision.h"
+#include "Framework/GameObject.h"
+#include "Framework/Vector.h"
+#include <vector>
+
+class BouncingBall : public GameObject {
+public:
+	BouncingBall();
+	~BouncingBall();
+
+	void update(float dt);
+	void handleInput(float dt);
+	void collisionResponse(GameObject* other);
+	void setWindow(sf::RenderWindow* window);
+	void setEntities(std::vector<BouncingBall*>* ballManager);
+	char getName();
+protected:
+	char name = 'ball';
+	sf::Texture texture;
+	sf::RenderWindow* window;
+	std::vector<BouncingBall*>* entities;
+};
