@@ -50,3 +50,12 @@ sf::FloatRect GameObject::getCollisionBox() {
 void GameObject::collisionResponse(GameObject * collider)
 {
 }
+
+// Extra stuff, see header for info
+void GameObject::setWindow(sf::RenderWindow* window) {
+	this->window = window;
+}
+
+void GameObject::setEntities(std::vector<GameObject*>* entities) {
+	this->entities = entities;
+}

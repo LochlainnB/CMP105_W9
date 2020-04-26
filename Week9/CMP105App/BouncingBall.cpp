@@ -5,6 +5,8 @@ BouncingBall::BouncingBall() {
 	texture.loadFromFile("gfx/Beach_Ball.png");
 	setTexture(&texture);
 	setSize(sf::Vector2f(148, 148));
+	setVelocity(rand() % 200 - 100, rand() % 200 - 100);
+	setAlive(true);
 }
 
 BouncingBall::~BouncingBall() {
@@ -58,14 +60,6 @@ void BouncingBall::collisionResponse(GameObject* other) {
 	sf::Vector2f displacement = sf::Vector2f((other->getPosition().x + other->getSize().x / 2) - (getPosition().x + getSize().x / 2), (other->getPosition().y + other->getSize().y / 2) - (getPosition().y + getSize().y / 2));
 	setPosition(getPosition() + Vector::normalise(displacement) * 0.5f * (Vector::magnitude(displacement) - desiredDistance));
 	setVelocity(Vector::normalise(displacement) * -1.0f * Vector::magnitude(getVelocity()));
-}
-
-void BouncingBall::setWindow(sf::RenderWindow* window) {
-	this->window = window;
-}
-
-void BouncingBall::setEntities(std::vector<BouncingBall*>* entities) {
-	this->entities = entities;
 }
 
 char BouncingBall::getName() {

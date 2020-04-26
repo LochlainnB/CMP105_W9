@@ -1,11 +1,13 @@
 #include "BallManager.h"
 
 BallManager::BallManager() {
-	texture.loadFromFile("gfx/Beach_Ball.png");
+
 }
 
 BallManager::~BallManager() {
-
+	for (int i = 0; i < balls.size(); i++) {
+		delete balls[i];
+	}
 }
 
 void BallManager::setInput(Input* input) {
@@ -16,20 +18,16 @@ void BallManager::setWindow(sf::RenderWindow* window) {
 	this->window = window;
 }
 
-void BallManager::spawn(sf::Vector2f position, sf::Vector2f velocity) {
+void BallManager::spawn(sf::Vector2f position) {
 	balls.push_back(new BouncingBall);
-	balls[balls.size() - 1]->setTexture(&texture);
-	balls[balls.size() - 1]->setSize(sf::Vector2f(148, 148));
 	balls[balls.size() - 1]->setPosition(position);
-	balls[balls.size() - 1]->setVelocity(velocity);
-	balls[balls.size() - 1]->setAlive(true);
 	balls[balls.size() - 1]->setWindow(window);
 	balls[balls.size() - 1]->setInput(input);
 	balls[balls.size() - 1]->setEntities(&balls);
 }
 
-void BallManager::spawn(float positionX, float positionY, float velocityX, float velocityY) {
-	spawn(sf::Vector2f(positionX, positionY), sf::Vector2f(velocityX, velocityY));
+void BallManager::spawn(float positionX, float positionY) {
+	spawn(sf::Vector2f(positionX, positionY));
 }
 
 void BallManager::update(float dt) {
@@ -47,7 +45,7 @@ void BallManager::update(float dt) {
 void BallManager::handleInput(float dt) {
 	//self
 	if (input->isMouseRDown()) {
-		spawn(input->getMouseX(), input->getMouseY(), rand() % 200 - 100, rand() % 200 - 100);
+		spawn(input->getMouseX(), input->getMouseY());
 		input->setMouseRDown(false);
 	}
 	//balls
